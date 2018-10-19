@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3DRudiksCube</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+		transform-style:preserve-3d;
+	}
+	.wrapping{
+		width: 800px;
+		height: 600px;
+		border:1px solid black;
+		margin: 20px auto;
+		position: relative;
+		/*transform:rotateY(45deg);*/
+	}
+	.wrapping .cover{
+		position: absolute;
+		width: 150px;
+		height: 150px;
+		/*border:1px solid black;*/
+		left: 300px;
+		top: 250px;
+		/*transform:rotate3d(-1,1,0,45deg);*/
+		transition:all 500ms ease-in;
+	}
+	.wrapping div.on{
+		transform:rotate3d(-1,1,0,45deg) rotateZ(45deg) translate3d(0,0,0);
+	}
+	.wrapping .block{
+		width: 50px;
+		height: 50px;
+		position: absolute;
+	
+	}
+	.wrapping .block div{
+		width: 100%;
+		height: 100%;
+		transform:translateZ(25px) ;
+		position: absolute;
+		left: 0;
+		top: 0;
+		border:1px solid black;
+	}
+
+	.wrapping .block div:nth-of-type(1){
+		background-color: red;
+	}
+	.wrapping .block div:nth-of-type(2){
+		transform:translateX(-25px) rotateY(90deg);
+		background-color: blue;
+	}
+	.wrapping .block div:nth-of-type(3){
+		transform:translateY(-25px) rotateX(90deg);
+		background-color: lime;
+	}
+	.wrapping .block div:nth-of-type(4){
+		transform:translateX(25px) rotateY(90deg);
+		background-color: purple;
+	}
+	.wrapping .block div:nth-of-type(5){
+		transform:translateZ(-25px);
+		background-color: orange;
+	}
+	.wrapping .block div:nth-of-type(6){
+		transform:translateY(25px) rotateX(90deg);
+		background-color: yellow;
+	}
+	</style>
+</head>
+<body onselectstart='return false'>
+	<div class="wrapping">
+	
+	</div>
+	<script type="text/javascript" src='../js/jquery.js'></script>
+	<script type="text/javascript">
+	// js动态创建div.block
+	$(function(){
+		block();
+		function block(){
+			var wrap = $('.wrapping');
+			var code = ['A','B','C'];
+			var div = '<div></div>';
+			var posSize = 50;
+			for(var d = 0;d < 5;d++){
+				div +='<div></div>';
+			}
+			// 创建一个三维数组
+			for(var z = 0; z < 3; z++){
+				var idName = 'c' + (z+1);
+				wrap.append("<div class='cover' id='"+ idName +"'></div>")
+				.find('#'+idName)
+				.attr('index',z)
+				.css({'transform':'rotate3d(-1,1,0,45deg) rotateZ(25.5deg) translate3d(0,0,'+z*posSize+'px)'});
+				for(var y = 0; y < 3;y++){
+					for(var x = 0; x < 3;x++){
+						var className = code[z] + '_'+ (y * 3 + x)
+						$('#' + idName).append("<div class='block " + className + "'></div>")
+						.find('.' + className)
+						.css({'transform':'	 translate3d(' + x * posSize +'px,'+ y*posSize +'px,'+ 0 +'px)'})
+						.append(div)
+						.find('div').each(function(index,item){
+							// console.log(item + index + this.parentNode.className);
+							item.addEventListener('mousedown',mouseDownCover,false);
+						});
+					}
+				}
+			}
+		}
+		//点击事件
+		var coverAll = [{d:0},{d:0},{d:0}];
+		function mouseDownCover(e){
+			var event = e.target.parentNode.parentNode;//获取父级
+			var index = $(event).attr('index');
+			var x = e.pageX;
+			$(event).on('mousemove',function(mem){
+				if(mem.pageX > x){
+					coverAll[index].d += 90;
+					$(this).css({
+						'transform':'rotate3d(-1,1,0,45deg) rotateZ('+ coverAll[index].d +'deg) translate3d(0,0,'+(index * 50)+'px)'
+					}).off('mousemove');
+				}else if(mem.pageX< x){
+					coverAll[index].d -= 90;
+					$(this).css({
+						'transform':'rotate3d(-1,1,0,45deg) rotateZ('+ coverAll[index].d +'deg) translate3d(0,0,'+(index * 50)+'px)'
+					}).off('mousemove');
+				}
+			});
+			$(event).on('mouseup',function(){
+				$(this).off('mousemove');
+			})''
+		}
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+	//点击一次 渲染一次?
+	//用于判断位置的只有transform的translate
+	(function(){
+		//定义一个方块数组
+		//方块属性：pos 
+		var all = [];
+		var code = ['A','B','C'];
+		var posSize = 50;
+		for(var z = 1; z <= 3; z++){
+			for(var y = 0; y < 3;y++){
+				for(var x = 0; x < 3;x++){
+					var className = code[z-1] + '_'+ (y * 3 + x);
+					all.push({posX : x * posSize,posY : y * posSize,posZ : z*posSize,blockName : className });
+				}
+			}
+		}
+		//点击后重新对数组进行排序
+		//对文本进行清空
+		//再重新绘制
+		//问题是如何进行转动？？？？？
+		//
+	})()
+	</script>
+</body>
+</html>

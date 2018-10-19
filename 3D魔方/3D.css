@@ -1,0 +1,105 @@
+	*{
+		margin: 0;
+		padding: 0;
+		box-sizing:border-box;
+		transform-style:preserve-3d;
+
+	}
+	.wrapping{
+		width: 800px;
+		height: 600px;
+		border:1px solid black;
+		margin: 20px auto;
+		position: relative;
+		transform:rotateY(50deg) rotateX(-20deg);
+	}
+	.wrapping .cover{
+		width: 50px;
+		height: 50px;
+		position: absolute;
+		top:50%;
+		left: 50%;
+		margin-left:-25px;
+		margin-top: -25px;
+		transition: all 500ms ease-in;
+	}
+	/*top*/
+	.wrapping .cover:nth-of-type(1){
+		transform:rotateX(90deg) translateZ(50px) ;
+	}
+	.wrapping .cover:nth-of-type(1) .block,
+	.wrapping .cover:nth-of-type(2) .block{
+		transform:rotateX(-90deg);
+	}
+	/*bottom*/
+	.wrapping .cover:nth-of-type(2){
+		transform:rotateX(90deg) translateZ(-50px);
+	}
+	/*right*/
+	.wrapping .cover:nth-of-type(3){
+		transform:rotateY(90deg) translateZ(50px);
+	}
+	/*left*/
+	.wrapping .cover:nth-of-type(4){
+		transform:rotateY(90deg) translateZ(-50px);
+	}
+	.wrapping .cover:nth-of-type(3) .block,
+	.wrapping .cover:nth-of-type(4) .block{
+		transform:rotateY(-90deg);
+	}
+	/*after*/
+	.wrapping .cover:nth-of-type(5){
+		transform: translateZ(50px);
+	}
+	/*before*/
+	.wrapping .cover:nth-of-type(6){
+		transform: translateZ(-50px);
+	}
+
+
+	.wrapping .block{
+		width: 50px;
+		height: 50px;
+		position: absolute;
+		left: 0;
+		top: 0;
+
+	}
+
+	.wrapping .three{
+		left: -50px;
+		top:-50px;
+	}
+
+	.wrapping .block span{
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		border:1px solid black;
+	}
+
+	.wrapping .block span:nth-of-type(1){
+		transform:translateZ(25px);
+		background-color: red;
+	}
+	.wrapping .block span:nth-of-type(2){
+		transform:translateX(-25px) rotateY(90deg);
+		background-color: blue;
+	}
+	.wrapping .block span:nth-of-type(3){
+		transform:translateY(-25px) rotateX(90deg);
+		background-color: lime;
+	}
+	.wrapping .block span:nth-of-type(4){
+		transform:translateX(25px) rotateY(90deg);
+		background-color: purple;
+	}
+	.wrapping .block span:nth-of-type(5){
+		transform:translateZ(-25px);
+		background-color: orange;
+	}
+	.wrapping .block span:nth-of-type(6){
+		transform:translateY(25px) rotateX(90deg);
+		background-color: white;
+	}
